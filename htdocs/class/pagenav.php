@@ -34,6 +34,7 @@ class XoopsPageNav
     public $perpage;
     public $current;
     public $url;
+    public $extra;
     /**
      * *#@-
      */
@@ -85,7 +86,7 @@ class XoopsPageNav
                 }
                 $counter      = 1;
                 $current_page = (int)floor(($this->current + $this->perpage) / $this->perpage);
-                while ($counter <= $total_pages) {					
+                while ($counter <= $total_pages) {
                     if ($counter == $current_page) {
 						$navigation[$i]['url'] = $this->url . $prev . $this->extra;
 						$navigation[$i]['value'] = $counter;
@@ -243,8 +244,10 @@ class XoopsPageNav
 		$pageNavTpl = new \XoopsTpl();
 		$pageNavTpl->assign('pageNavType', $type);
 		$pageNavTpl->assign('pageNavigation', $navigation);
-		
+        $url_canonical = XOOPS_URL . htmlspecialchars(Request::getString('PHP_SELF', '', 'SERVER'), ENT_QUOTES);
+        if ($url_canonical != XOOPS_URL . Request::getString('REQUEST_URI', '', 'SERVER')){
+            $GLOBALS['xoTheme']->addLink('canonical', $url_canonical);
+        }
 		return $pageNavTpl->fetch("db:system_pagenav.tpl");
-		
 	}
 }
