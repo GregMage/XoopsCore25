@@ -139,6 +139,7 @@ switch ($action) {
         }
         $xoopsOption['xoops_pagetitle'] = _SR_SEARCHRESULTS . ': ' . implode(' ', $queries);
         include $GLOBALS['xoops']->path('header.php');
+        $GLOBALS['xoTheme']->addLink('canonical', XOOPS_URL . '/search.php');
 		$xoopsTpl->assign('results', true);
         $nomatch = true;
 		$keywords = '';
@@ -221,6 +222,7 @@ switch ($action) {
     case 'showall':
     case 'showallbyuser':
         include $GLOBALS['xoops']->path('header.php');
+        $GLOBALS['xoTheme']->addLink('canonical', XOOPS_URL . '/search.php');
 		$xoopsTpl->assign('showallbyuser', true);
     /* @var XoopsModuleHandler $module_handler */
 		$module_handler = xoops_getHandler('module');
