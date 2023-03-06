@@ -17,6 +17,7 @@
  */
 /* @var XoopsUser $xoopsUser */
 /* @var XoopsConfigItem $xoopsConfig */
+use Xmf\Request;
 
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
     die('Restricted access');
@@ -308,5 +309,11 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                               'lang_posted'  => _CM_POSTED,
                               'lang_updated' => _CM_UPDATED,
                               'lang_notice'  => _CM_NOTICE));
+
+        $extra = '?'. trim($comment_config['itemName']) . '=' . $com_itemid . '&amp;' . $extra_param . '=' . $hidden_value;
+        $url_canonical = XOOPS_URL . htmlspecialchars(Request::getString('PHP_SELF', '', 'SERVER'), ENT_QUOTES) . $extra;
+        echo $url_canonical;
+        echo '<br>' . $com_itemid;
+        $GLOBALS['xoTheme']->addLink('canonical', $url_canonical);
     }
 }
